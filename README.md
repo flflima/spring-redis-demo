@@ -1,7 +1,14 @@
 # Spring Redis Demo
 
-Starting redis
+Starting redis:
 
 ```shell
 docker-compose up
+```
+
+Executing:
+
+```shell
+curl -X POST -H 'Content-Type: application/json' \
+-d '{"text": "Hello World!"}'
 ```

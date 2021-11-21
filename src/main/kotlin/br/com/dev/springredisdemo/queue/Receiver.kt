@@ -1,6 +1,7 @@
 package br.com.dev.springredisdemo.queue
 
-import br.com.dev.springredisdemo.dto.MessageDTO
+import br.com.dev.springredisdemo.constants.Constants
+import br.com.dev.springredisdemo.dto.toMessageDTO
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
@@ -11,8 +12,8 @@ class Receiver {
     lateinit var objectMapper: ObjectMapper
 
     fun receiveMessage(message: String) {
-        Thread.sleep((Math.random() * 12000).toLong())
-        val messageDTO = objectMapper.readValue(message, MessageDTO::class.java)
-        println("${messageDTO.text} - ${messageDTO.timestamp}")
+        Thread.sleep((Math.random() * Constants.LIMIT_SECONDS_IN_MS).toLong())
+        val messageDTO = message.toMessageDTO(objectMapper)
+        println(messageDTO)
     }
 }

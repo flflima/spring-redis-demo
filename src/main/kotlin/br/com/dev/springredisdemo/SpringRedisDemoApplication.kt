@@ -1,5 +1,6 @@
 package br.com.dev.springredisdemo
 
+import br.com.dev.springredisdemo.constants.Constants
 import br.com.dev.springredisdemo.queue.Receiver
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
@@ -25,19 +26,14 @@ class SpringRedisDemoApplication {
     ): RedisMessageListenerContainer {
         val container = RedisMessageListenerContainer()
         container.setConnectionFactory(connectionFactory)
-        container.addMessageListener(listenerAdapter, PatternTopic("messages_queue"))
+        container.addMessageListener(listenerAdapter, PatternTopic(Constants.MESSAGE_QUEUE_NAME))
         return container
     }
 
     @Bean
     fun listenerAdapter(receiver: Receiver): MessageListenerAdapter {
-        return MessageListenerAdapter(receiver, "receiveMessage")
+        return MessageListenerAdapter(receiver, Constants.LISTENER_METHOD)
     }
-
-//    @Bean
-//    fun receiver(): Receiver {
-//        return Receiver()
-//    }
 
     @Bean
     fun template(connectionFactory: RedisConnectionFactory): StringRedisTemplate {
@@ -54,7 +50,6 @@ class SpringRedisDemoApplication {
                 .configure(KotlinFeature.NullToEmptyCollection, false)
                 .configure(KotlinFeature.NullToEmptyMap, false)
                 .configure(KotlinFeature.NullIsSameAsDefault, false)
-//                .configure(KotlinFeature.SingletonSupport, DISABLED)
                 .configure(KotlinFeature.StrictNullChecks, false)
                 .build()
         )
