@@ -13,6 +13,10 @@ curl -X POST -H 'Content-Type: application/json' \
 -d '{"text": "Hello World!"}'
 ```
 
-Instalando Artillery:
+Installing and running Artillery:
 
+```shell
 npm install -g artillery
+
+artillery run artillery.yml
+```
