@@ -32,7 +32,7 @@ class SpringRedisDemoApplication {
 
     @Bean
     fun listenerAdapter(receiver: Receiver): MessageListenerAdapter {
-        return MessageListenerAdapter(receiver, Constants.LISTENER_METHOD)
+        return MessageListenerAdapter(receiver, Constants.LISTENER_METHOD_NAME)
     }
 
     @Bean
