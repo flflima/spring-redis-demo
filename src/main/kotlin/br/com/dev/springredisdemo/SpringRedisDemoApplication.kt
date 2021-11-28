@@ -31,30 +31,21 @@ class SpringRedisDemoApplication {
     }
 
     @Bean
-    fun listenerAdapter(receiver: Receiver): MessageListenerAdapter {
-        return MessageListenerAdapter(receiver, Constants.LISTENER_METHOD_NAME)
-    }
+    fun listenerAdapter(receiver: Receiver) = MessageListenerAdapter(receiver, Constants.LISTENER_METHOD_NAME)
 
     @Bean
-    fun template(connectionFactory: RedisConnectionFactory): StringRedisTemplate {
-        return StringRedisTemplate(connectionFactory)
-    }
+    fun stringRedisTemplate(connectionFactory: RedisConnectionFactory) = StringRedisTemplate(connectionFactory)
 
     @Bean
-    fun objectMapper(): ObjectMapper {
-        val objectMapper = ObjectMapper();
-        objectMapper.registerModule(JavaTimeModule())
-        objectMapper.registerModule(
-            KotlinModule.Builder()
-                .withReflectionCacheSize(512)
-                .configure(KotlinFeature.NullToEmptyCollection, false)
-                .configure(KotlinFeature.NullToEmptyMap, false)
-                .configure(KotlinFeature.NullIsSameAsDefault, false)
-                .configure(KotlinFeature.StrictNullChecks, false)
-                .build()
-        )
-        return objectMapper
-    }
+    fun objectMapper() = ObjectMapper().registerModule(JavaTimeModule()).registerModule(
+        KotlinModule.Builder()
+            .withReflectionCacheSize(512)
+            .configure(KotlinFeature.NullToEmptyCollection, false)
+            .configure(KotlinFeature.NullToEmptyMap, false)
+            .configure(KotlinFeature.NullIsSameAsDefault, false)
+            .configure(KotlinFeature.StrictNullChecks, false)
+            .build()
+    )
 }
 
 fun main(args: Array<String>) {
